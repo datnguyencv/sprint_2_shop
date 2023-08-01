@@ -1,11 +1,11 @@
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
-* {
+.datnt * {
     box-sizing: border-box;
 }
 
-body {
+.datnt body {
     background: #f6f5f7;
     display: flex;
     justify-content: center;
@@ -16,16 +16,16 @@ body {
     margin: -20px 0 50px;
 }
 
-h1 {
+.datnt h1 {
     font-weight: bold;
     margin: 0;
 }
 
-h2 {
+.datnt h2 {
     text-align: center;
 }
 
-p {
+.datnt p {
     font-size: 14px;
     font-weight: 100;
     line-height: 20px;
@@ -33,18 +33,18 @@ p {
     margin: 20px 0 30px;
 }
 
-span {
+.datnt span {
     font-size: 12px;
 }
 
-a {
+.datnt a {
     color: #333;
     font-size: 14px;
     text-decoration: none;
     margin: 15px 0;
 }
 
-button {
+.datnt button {
     border-radius: 20px;
     border: 1px solid #FF4B2B;
     background-color: #FF4B2B;
@@ -57,20 +57,20 @@ button {
     transition: transform 80ms ease-in;
 }
 
-button:active {
+.datnt button:active {
     transform: scale(0.95);
 }
 
-button:focus {
+.datnt button:focus {
     outline: none;
 }
 
-button.ghost {
+.datnt button.ghost {
     background-color: transparent;
     border-color: #FFFFFF;
 }
 
-form {
+.datnt form {
     background-color: #FFFFFF;
     display: flex;
     align-items: center;
@@ -81,7 +81,7 @@ form {
     text-align: center;
 }
 
-input {
+.datnt input {
     background-color: #eee;
     border: none;
     padding: 12px 15px;
@@ -89,7 +89,7 @@ input {
     width: 100%;
 }
 
-.container {
+.datnt .container {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25),
@@ -102,31 +102,31 @@ input {
     margin: auto;
 }
 
-.form-container {
+.datnt .form-container {
     position: absolute;
     top: 0;
     height: 100%;
     transition: all 0.6s ease-in-out;
 }
 
-.sign-in-container {
+.datnt .sign-in-container {
     left: 0;
     width: 50%;
     z-index: 2;
 }
 
-.container.right-panel-active .sign-in-container {
+.datnt .container.right-panel-active .sign-in-container {
     transform: translateX(100%);
 }
 
-.sign-up-container {
+.datnt .sign-up-container {
     left: 0;
     width: 50%;
     opacity: 0;
     z-index: 1;
 }
 
-.container.right-panel-active .sign-up-container {
+.datnt .container.right-panel-active .sign-up-container {
     transform: translateX(100%);
     opacity: 1;
     z-index: 5;
@@ -145,7 +145,7 @@ input {
     }
 }
 
-.overlay-container {
+.datnt .overlay-container {
     position: absolute;
     top: 0;
     left: 50%;
@@ -156,11 +156,11 @@ input {
     z-index: 100;
 }
 
-.container.right-panel-active .overlay-container{
+.datnt .container.right-panel-active .overlay-container{
     transform: translateX(-100%);
 }
 
-.overlay {
+.datnt .overlay {
     background: #FF416C;
     background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
     background: linear-gradient(to right, #FF4B2B, #FF416C);
@@ -176,11 +176,11 @@ input {
     transition: transform 0.6s ease-in-out;
 }
 
-.container.right-panel-active .overlay {
+.datnt .container.right-panel-active .overlay {
     transform: translateX(50%);
 }
 
-.overlay-panel {
+.datnt .overlay-panel {
     position: absolute;
     display: flex;
     align-items: center;
@@ -195,28 +195,28 @@ input {
     transition: transform 0.6s ease-in-out;
 }
 
-.overlay-left {
+.datnt .overlay-left {
     transform: translateX(-20%);
 }
 
-.container.right-panel-active .overlay-left {
+.datnt .container.right-panel-active .overlay-left {
     transform: translateX(0);
 }
 
-.overlay-right {
+.datnt .overlay-right {
     right: 0;
     transform: translateX(0);
 }
 
-.container.right-panel-active .overlay-right {
+.datnt .container.right-panel-active .overlay-right {
     transform: translateX(20%);
 }
 
-.social-container {
+.datnt .social-container {
     margin: 20px 0;
 }
 
-.social-container a {
+.datnt .social-container a {
     border: 1px solid #DDDDDD;
     border-radius: 50%;
     display: inline-flex;
@@ -227,7 +227,7 @@ input {
     width: 40px;
 }
 
-footer {
+.datnt footer {
     background-color: #222;
     color: #fff;
     font-size: 14px;
@@ -239,15 +239,15 @@ footer {
     z-index: 999;
 }
 
-footer p {
+.datnt footer p {
     margin: 10px 0;
 }
 
-footer i {
+.datnt footer i {
     color: red;
 }
 
-footer a {
+.datnt footer a {
     color: #3c97bf;
     text-decoration: none;
 }

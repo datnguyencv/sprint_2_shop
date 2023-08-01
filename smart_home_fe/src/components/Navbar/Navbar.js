@@ -57,8 +57,8 @@ const Navbar = () => {
                     </div>
                     <div className="icons">
                         <SearchIcon/>
-                        {/*<Link className="link" to="/form-login"> <PersonOutlineOutlinedIcon/></Link>*/}
-                        <PersonOutlineOutlinedIcon/>
+                        <Link className="link" to="/form-login"> <PersonOutlineOutlinedIcon/></Link>
+                        {/*<PersonOutlineOutlinedIcon/>*/}
                         <FavoriteBorderOutlinedIcon/>
                         <div className="cartIcon" onClick={() => setOpen(!open)}>
                             <ShoppingCartOutlinedIcon/>
