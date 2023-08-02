@@ -39,7 +39,7 @@ const Products = () => {
                 value={item.id}
                 onChange={handleChange}
               />
-              <label htmlFor={item.id}>{item.attributes.title}</label>
+              <label htmlFor={item.id}>{item.title}</label>
             </div>
           ))}
         </div>

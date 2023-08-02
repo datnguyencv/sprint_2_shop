@@ -1,0 +1,31 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "img": "https://s.alicdn.com/@sc04/kf/H5224f95c3fa5477c94e26655349b8a6bg.jpg_960x960.jpg",
+      "img2": "https://s.alicdn.com/@sc04/kf/H6946a8257dec48dd9a61f729293d2518I.jpg_960x960.jpg",
+      "title": "Roborock G10 Automatic Smart Wet and Dry Mopping Sweeping",
+      "isNew": true,
+      "oldPrice": 700,
+      "price": 680
+    },
+    {
+      "id": 2,
+      "img": "https://s.alicdn.com/@sc04/kf/H024e14dd8bb84ea9a38ff0119114ce0eL.jpg_960x960.jpg",
+      "img2": "https://s.alicdn.com/@sc04/kf/H121b167102ed4c29998ead117d33e643L.jpg_960x960.jpg",
+      "title": "RHousehold 2800ml Visual Water Tank Mini ",
+      "isNew": true,
+      "oldPrice": 45,
+      "price": 42
+    },
+    {
+      "id": 3,
+      "img": "https://s.alicdn.com/@sc04/kf/He2d1d4a804bc4cd79d365caa37a323957.png_960x960.png",
+      "img2": "https://s.alicdn.com/@sc04/kf/H4e2b12c4f5db47de89df73430c4410f9i.png_960x960.png",
+      "title": "Zigbee Gateway Hub IoT Device Custom Voice Assistant Speaker",
+      "isNew": true,
+      "oldPrice": 96,
+      "price": 92
+    }
+  ]
+}

@@ -27,6 +27,7 @@ const Footer = () => {
                 </div>
                 <div className="item">
                     <h1>Liên hệ</h1>
+                    <span>
                     <p>
                         Nếu bạn có bất kỳ câu hỏi hoặc yêu cầu nào, xin hãy liên hệ với chúng tôi qua thông tin bên
                         dưới:
@@ -39,6 +40,7 @@ const Footer = () => {
                     <p>
                         Chúng tôi sẽ phản hồi bạn sớm nhất có thể. Xin cảm ơn!
                     </p>
+                        </span>
                 </div>
             </div>
             <div className="bottom">
