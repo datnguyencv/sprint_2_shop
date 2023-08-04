@@ -18,12 +18,12 @@ const Navbar = () => {
             <div className="wrapper">
                 <div className="left">
                     <div className="item">
-                        <img src="/img/en.png" alt=""/>
-                        <KeyboardArrowDownIcon/>
+                        <img src="/img/vn.png" style={{width:"50px"}} alt=""/>
+                        {/*<KeyboardArrowDownIcon/>*/}
                     </div>
                     <div className="item">
-                        <span>USD</span>
-                        <KeyboardArrowDownIcon/>
+                        <span>VND</span>
+                        {/*<KeyboardArrowDownIcon/>*/}
                     </div>
                     <div className="item">
                         <Link className="link" to="/products/1">Bán chạy</Link>
@@ -38,22 +38,18 @@ const Navbar = () => {
                 </div>
                 <div className="center">
                     <Link className="link" to="/">
-                        SmartHome
-                        <br/>
-                        <span style={{textAlign: "center"}}>Gadgets</span></Link>
+                        <img src="/img/logo.png" style={{width:"120px", marginTop:"-10px"}} alt="SmartHome Gadgets Logo" />
+                    </Link>
                 </div>
                 <div className="right">
                     <div className="item">
-                        <Link className="link" to="/">Homepage</Link>
+                        <Link className="link" to="/">Trang chủ</Link>
                     </div>
                     <div className="item">
-                        <Link className="link" to="/">About</Link>
+                        <Link className="link" to="/">Về chúng tôi</Link>
                     </div>
                     <div className="item">
-                        <Link className="link" to="/">Contact</Link>
-                    </div>
-                    <div className="item">
-                        <Link className="link" to="/">Stores</Link>
+                        <Link className="link" to="/">Liên hệ</Link>
                     </div>
                     <div className="icons">
                         <SearchIcon/>

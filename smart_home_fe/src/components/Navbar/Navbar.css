@@ -1,5 +1,9 @@
 .navbar {
-  height: 80px;
+  height: 120px;
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  background-color: whitesmoke;
 }
 .navbar .wrapper {
   padding: 10px 30px;
@@ -48,4 +52,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.content-below-navbar {
+  padding-top: 130px;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import './Login.css';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
@@ -15,6 +15,12 @@ const FormLogin = () => {
     const handleSignInClick = () => {
         setIsSignUp(false);
     };
+
+    useEffect(() => {
+        document.title = isSignUp ? "Trang đăng ký" : "Trang đăng nhập";
+        console.log(isSignUp)
+        window.scrollTo(0,0);
+    }, [isSignUp]);
 
     return (
        <div className="datnt"> <div className={`container ${isSignUp ? 'right-panel-active' : ''}`}>

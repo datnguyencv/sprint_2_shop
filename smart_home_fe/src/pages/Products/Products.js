@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import List from "../../components/List/List";
@@ -14,6 +14,10 @@ const Products = () => {
   const { data, loading, error } = useFetch(
     `/sub-categories?[filters][categories][id][$eq]=${catId}`
   );
+  useEffect(() => {
+    document.title = "Loại sản phẩm"; // Thay đổi title
+    window.scrollTo(0,0)
+  }, []);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -83,7 +87,7 @@ const Products = () => {
       <div className="right">
         <img
           className="catImg"
-          src="https://images.pexels.com/photos/1074535/pexels-photo-1074535.jpeg?auto=compress&cs=tinysrgb&w=1600"
+          src="/img/banner.jpg" style={{height:"40%"}}
           alt=""
         />
         <List catId={catId} maxPrice={maxPrice} sort={sort} subCats={selectedSubCats}/>

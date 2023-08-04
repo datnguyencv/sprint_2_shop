@@ -1,5 +1,6 @@
 import React from "react";
 import "./Footer.css";
+import {Link} from "react-router-dom";
 
 const Footer = () => {
     return (
@@ -45,8 +46,11 @@ const Footer = () => {
             </div>
             <div className="bottom">
                 <div className="left">
-          <span className="logo">SmartHome <br/>
-                    Gadgets</span>
+                    <Link className="link" to="/">
+                        <img src="/img/logo-row-big.png" style={{width: "400px"}}
+                             alt="SmartHome Gadgets Logo"/>
+                    </Link>
+
                     <span className="copyright">
             © Copyright 2023. All Rights Reserved
           </span>

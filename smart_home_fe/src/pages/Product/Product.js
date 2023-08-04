@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./Product.css";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -11,6 +11,11 @@ const Product = () => {
   const id = useParams().id;
   const [selectedImg, setSelectedImg] = useState("img");
   const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    document.title = "Chi tiết sản phẩm"; // Thay đổi title
+    window.scrollTo(0,0)
+  }, []);
 
   const dispatch = useDispatch();
   const { data, loading, error } = useFetch(`/products/${id}`);
@@ -49,7 +54,7 @@ const Product = () => {
           </div>
           <div className="right">
             <h1>{data?.title}</h1>
-            <span className="price">${data?.price}</span>
+            <span className="price">VND {data?.price} đ</span>
             <p>{data?.desc}</p>
             <div className="quantity">
               <button
