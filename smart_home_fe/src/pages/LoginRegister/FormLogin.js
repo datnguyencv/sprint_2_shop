@@ -4,6 +4,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import {useNavigate} from "react-router-dom";
+import {getEmail, postLogin} from "../../hooks/service";
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 
@@ -22,7 +23,6 @@ const FormLogin = () => {
             formPw.setAttribute("type", "password");
         } else {
             formPw.setAttribute("type", "text");
-
         }
 
         setShowPassword((pre) => !pre);
@@ -33,19 +33,18 @@ const FormLogin = () => {
         return null;
     }
 
-    const handleSignUpClick = () => {
-        setIsSignUp(true);
-    };
+    // const handleSignUpClick = () => {
+    //     setIsSignUp(true);
+    // };
 
     const handleSignInClick = () => {
         setIsSignUp(false);
     };
 
     useEffect(() => {
-        document.title = isSignUp ? "Trang đăng ký" : "Trang đăng nhập";
-        console.log(isSignUp)
+        document.title = "Trang đăng nhập";
         window.scrollTo(0, 0);
-    }, [isSignUp]);
+    }, []);
 
     return (
         <div className="datnt">
@@ -88,18 +87,22 @@ const FormLogin = () => {
                                 <a href="/#" className="social"><GoogleIcon/></a>
                                 <a href="/#" className="social"><LinkedInIcon/></a>
                             </div>
-                            <div className="inputBox">
-                                <ion-icon name="lock-closed-outline"/>
-                                <span>or use your account</span>
+                            <div className="inputbox">
+                                <ion-icon name="mail-outline"/>
+                                <Field type="text" name="username"/>
+                                <label htmlFor="">Username</label>
+                                <ErrorMessage name="username" className="text-black col-12" component="span"/>
+                            </div>
 
-                                <Field type="username" placeholder="UserName"/>
+                            <div className="inputbox">
+                                <ion-icon name="lock-closed-outline"/>
+                                <Field type="password" name="password"/>
                                 <span className="password-icon" onClick={() => handlePassword()}>
                                     </span>
-                                <Field type="password" placeholder="Password"/>
+                                <label htmlFor="">Password</label>
                                 <ErrorMessage name="password" className="text-black col-12" component="span"/>
-                                <a href="/#">Forgot your password?</a>
-                                <button type="submit">Đăng nhập</button>
                             </div>
+                            <button type="submit">Log in</button>
                         </Form>
                     </div>
                 </Formik>

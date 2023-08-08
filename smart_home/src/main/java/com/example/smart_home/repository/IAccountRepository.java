@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IAccountRepository extends JpaRepository<Account,Integer> {
-    @Query(value = "select a.* from  User as a where a.username= :email", nativeQuery = true)
+    @Query(value = "select a.* from  Account as a where a.username= :email", nativeQuery = true)
     Account findAccountByEmail(@Param("email") String email);
 }
