@@ -1,6 +1,5 @@
 package com.example.smart_home.controller;
 
-
 import com.example.smart_home.model.account.Account;
 import com.example.smart_home.serivce.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;

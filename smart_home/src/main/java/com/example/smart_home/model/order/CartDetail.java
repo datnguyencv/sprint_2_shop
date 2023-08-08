@@ -41,7 +41,6 @@ public class CartDetail {
         this.isDelete = isDelete;
     }
 
-
     public Integer getCartDetailId() {
         return cartDetailId;
     }
