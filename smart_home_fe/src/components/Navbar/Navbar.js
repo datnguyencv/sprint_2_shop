@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
+
 import {Link, useNavigate} from "react-router-dom";
 import "./Navbar.css"
 import Cart from "../Cart/Cart";
@@ -12,15 +13,16 @@ import "react-toastify/dist/ReactToastify.css"
 
 const Navbar = () => {
     const [open, setOpen] = useState(false)
+    const [showDropdown, setShowDropdown] = useState(false);
     const [isLogin, setIsLogin] = useState(false)
     const products = useSelector((state) => state.cart.products);
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('TOKEN');
     const [username, setUsername] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
         const getToken = async () => {
-            setUsername(localStorage.getItem('username'));
+            setUsername(sessionStorage.getItem('USERNAME'));
         }
         getToken();
         if (token) {
@@ -29,12 +31,17 @@ const Navbar = () => {
         }
     }, [token]);
     const handlerLogout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("username");
-        localStorage.removeItem("role");
+        sessionStorage.removeItem("TOKEN");
+        sessionStorage.removeItem("USERNAME");
+        sessionStorage.removeItem("roles");
         setIsLogin(false);
         toast.success("Đăng xuất thành công !!");
+        setShowDropdown(!showDropdown);
         navigate("/")
+    };
+
+    const handleUsernameClick = () => {
+        setShowDropdown(!showDropdown);
     };
 
     return (
@@ -80,15 +87,32 @@ const Navbar = () => {
                         <SearchIcon/>
                         <Link className="link" to="/form-login"> <PersonOutlineOutlinedIcon/>
                             <span className="box-text">
-<span className="txtnw">{username === "" || username === null ? "Đăng nhập" : username
-}</span></span>
+          <span className="txtnw" onClick={handleUsernameClick}>
+            {username === "" || username == null ? "" : username}
+          </span>
+                                {showDropdown && (
+                                    <div className="dropdown">
+                                        {sessionStorage.getItem('roles') === 'ROLE_ADMIN' && (
+                                            <Link to="/manage-customers" className="dropdown-link logout-button">
+                                                Quản lý sản phẩm
+                                            </Link>
+                                        )}
+                                        {token && (
+                                            <button className="logout-button" onClick={handlerLogout}>
+                                                <ExitToAppOutlinedIcon/>
+                                                Đăng xuất
+                                            </button>
+                                        )}
+                                    </div>
+                                )}
+        </span>
                         </Link>
-                        {/*<PersonOutlineOutlinedIcon/>*/}
-                        <FavoriteBorderOutlinedIcon/>
-                        <div className="cartIcon" onClick={() => setOpen(!open)}>
-                            <ShoppingCartOutlinedIcon/>
-                            <span>{products.length}</span>
-                        </div>
+                        {sessionStorage.getItem('roles') === 'ROLE_USER' && (
+                            <div className="cartIcon" onClick={() => setOpen(!open)}>
+                                <ShoppingCartOutlinedIcon/>
+                                <span>{products.length}</span>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

@@ -3,8 +3,10 @@ import './Login.css';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {useNavigate} from "react-router-dom";
-import {getEmail, postLogin} from "../../hooks/service";
+import {postLogin} from "../../hooks/service";
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 
@@ -13,38 +15,22 @@ const FormLogin = () => {
     const [isSignUp, setIsSignUp] = useState(false);
     const navigate = useNavigate();
 
-    const [showPassword, setShowPassword] = useState(false);
+    const [passwordVisible, setPasswordVisible] = useState(false);
     const [failedAccount, setFailedAccount] = useState(null);
-
-    const handlePassword = () => {
-        const formPw = document.querySelector(".form-pw");
-
-        if (showPassword) {
-            formPw.setAttribute("type", "password");
-        } else {
-            formPw.setAttribute("type", "text");
-        }
-
-        setShowPassword((pre) => !pre);
-    }
 
     if (!!sessionStorage.getItem("TOKEN")) {
         navigate('/login');
         return null;
     }
 
-    // const handleSignUpClick = () => {
-    //     setIsSignUp(true);
-    // };
-
     const handleSignInClick = () => {
         setIsSignUp(false);
     };
-
-    useEffect(() => {
-        document.title = "Trang đăng nhập";
-        window.scrollTo(0, 0);
-    }, []);
+    //
+    // useEffect(() => {
+    //     document.title = "Trang đăng nhập";
+    //     window.scrollTo(0, 0);
+    // }, []);
 
     return (
         <div className="datnt">
@@ -56,10 +42,11 @@ const FormLogin = () => {
                     }}
 
                     validationSchema={Yup.object().shape({
-                        username: Yup.string().required("This field cannot be left blank"),
+                        username: Yup.string().required("Tên đăng nhập không được để trống"),
 
                         password: Yup.string()
-                            .required("This field cannot be left blank")
+                            .required("Mật khẩu không được dẻ trống")
+                            // .matches(/^(?=.*\d)(?=.*[az])(?=.*[AZ]).{8,15}$/,"Mật khẩu trên 8 ký tự bao gồm chữ thường, INHOA, và số")
                     })}
 
                     onSubmit={(values) => {
@@ -87,22 +74,30 @@ const FormLogin = () => {
                                 <a href="/#" className="social"><GoogleIcon/></a>
                                 <a href="/#" className="social"><LinkedInIcon/></a>
                             </div>
-                            <div className="inputbox">
+                            <div className="inputbox" style={{width:"100%"}}>
                                 <ion-icon name="mail-outline"/>
-                                <Field type="text" name="username"/>
-                                <label htmlFor="">Username</label>
-                                <ErrorMessage name="username" className="text-black col-12" component="span"/>
+                                <Field type="text" name="username" placeHolder="Username"/>
+                                <ErrorMessage name="username" className="text-danger" component="span"/>
                             </div>
 
-                            <div className="inputbox">
-                                <ion-icon name="lock-closed-outline"/>
-                                <Field type="password" name="password"/>
-                                <span className="password-icon" onClick={() => handlePassword()}>
-                                    </span>
-                                <label htmlFor="">Password</label>
-                                <ErrorMessage name="password" className="text-black col-12" component="span"/>
+                            <div className="inputbox" style={{width:"100%"}}>
+                                <Field
+                                    className="input-field"
+                                    type={!passwordVisible ? 'text' : 'password'}
+                                    name="password"
+                                    placeholder="Password"
+                                />
+                                <button className="password-icon"
+                                    onClick={() => setPasswordVisible(!passwordVisible)}
+                                >
+                                    {passwordVisible ? <VisibilityIcon fontSize="small" /> : <VisibilityOffIcon fontSize="small" />}
+                                </button>
+                                <ErrorMessage name="password" className="text-danger" component="span" />
                             </div>
-                            <button type="submit">Log in</button>
+                            <div className="button-container">
+                                <button type="submit">Log in</button>
+                            </div>
+
                         </Form>
                     </div>
                 </Formik>
@@ -140,7 +135,6 @@ const FormLogin = () => {
                 </div>
             </div>
         </div>
-
     );
 };
 

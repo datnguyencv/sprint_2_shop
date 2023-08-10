@@ -56,3 +56,42 @@
 .content-below-navbar {
   padding-top: 130px;
 }
+
+.box-text {
+  position: relative;
+  display: inline-block;
+}
+
+.txtnw {
+  cursor: pointer;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.logout-button {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  text-align: left;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.logout-button:hover {
+  background-color: #f5f5f5;
+}
+
+.navbar .container {
+  position: relative;
+  display: inline-block;
+}
