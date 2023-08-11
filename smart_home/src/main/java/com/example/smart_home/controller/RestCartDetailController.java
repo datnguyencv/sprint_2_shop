@@ -1,5 +1,6 @@
 package com.example.smart_home.controller;
 
+import com.example.smart_home.config.JwtUserDetails;
 import com.example.smart_home.dto.ICartDetailDto;
 import com.example.smart_home.dto.ICartDetailDtoCheck;
 import com.example.smart_home.model.account.Account;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
@@ -36,13 +39,14 @@ public class RestCartDetailController {
     private IPurchaseService purchaseService;
 
         @PreAuthorize("hasAnyRole('ROLE_USER')")
-    @GetMapping("product-detail/addCart/{productId}/{accountId}/{quantity}")
+    @GetMapping("product-detail/addCart/{productId}/{quantity}")
     public ResponseEntity<CartDetail> saveCartDetailByUserIdAndProductId(@PathVariable Integer productId,
-                                                                         @PathVariable Integer accountId, @PathVariable int quantity) {
+                                                                         @PathVariable int quantity) {
         Product product = productService.findById(productId);
-        Account account = accountService.findAccountById(accountId);
+            Integer userId = ((JwtUserDetails) (SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getId();
+        Account account = accountService.findAccountById(userId);
 
-        List<ICartDetailDto> cartDetailDtoList = cartDetailService.findAllByAccountId(accountId);
+        List<ICartDetailDto> cartDetailDtoList = cartDetailService.findAllByAccountId(userId);
         for (ICartDetailDto cartDetailDto : cartDetailDtoList) {
             if (Objects.equals(cartDetailDto.getProductId(), productId)) {
                 CartDetail cartDetail = cartDetailService.findById(cartDetailDto.getCartDetailId());

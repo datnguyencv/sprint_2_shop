@@ -8,6 +8,7 @@ import Products from "./pages/Products/Products";
 import FormLogin from "./pages/LoginRegister/FormLogin";
 
 import "./app.css"
+import BeforeUnloadComponent from "./components/ConvertUnit/SaverCart";
 
 const Layout = () => {
     return (
@@ -29,6 +30,7 @@ function App() {
         <div>
             <BrowserRouter>
                 <Layout />
+                {/*<BeforeUnloadComponent/>*/}
             </BrowserRouter>
         </div>
     );

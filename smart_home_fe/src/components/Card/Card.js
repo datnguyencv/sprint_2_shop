@@ -1,6 +1,7 @@
 import React from "react";
 import "./Card.css";
 import { Link } from "react-router-dom";
+import { CurrencyFormatter } from '../ConvertUnit/UnitPublic';
 
 const Card = ({ item }) => {
   console.log(item);
@@ -26,8 +27,8 @@ const Card = ({ item }) => {
         </div>
         <h2>{item?.title}</h2>
         <div className="prices">
-          <h3>VND {item?.oldPrice || item?.price + 2} đ</h3>
-          <h3>VND {item?.price} đ</h3>
+          <h3>VND {(item?.oldPrice)? <CurrencyFormatter amount={item.oldPrice} /> : <CurrencyFormatter amount={item?.price + 5000} />} đ</h3>
+          <h3>VND <CurrencyFormatter amount={item?.price}/> đ</h3>
         </div>
       </div>
     </Link>

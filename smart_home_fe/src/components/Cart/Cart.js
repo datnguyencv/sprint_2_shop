@@ -4,6 +4,7 @@ import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import {useDispatch, useSelector} from "react-redux";
 import {removeItem, resetCart} from "../../redux/cartReducer";
 import {Link} from "react-router-dom";
+import {CurrencyFormatter} from "../ConvertUnit/UnitPublic";
 // import { makeRequest } from "../../makeRequest";
 // import { loadStripe } from "@stripe/stripe-js";
 
@@ -11,12 +12,9 @@ const Cart = () => {
     const products = useSelector((state) => state.cart.products);
     const dispatch = useDispatch();
     const [open, setOpen] = useState(true);
-    // const navigate = useNavigate();
     console.log(open)
 
     const handleClick = (e,id) => {
-        // e.preventDefault();
-        // navigate(`/product/${id}`);
         setOpen(false);
         console.log('open')
     };
@@ -25,7 +23,7 @@ const Cart = () => {
         products.forEach((item) => {
             total += item.quantity * item.price;
         });
-        return total.toFixed(2);
+        return total.toFixed(0);
     };
 
     // const stripePromise = loadStripe(
@@ -55,7 +53,7 @@ const Cart = () => {
                         <Link to={`/product/${item.id}`} onClick={(e) => handleClick()}>{item.title}</Link>
                         <p>{item.desc?.substring(0, 100)}</p>
                         <div className="price">
-                            Số lượng {item.quantity} x VND {item.price} đ
+                            Số lượng {item.quantity} x VND <CurrencyFormatter amount={item.price}/> đ
                         </div>
                     </div>
                     <DeleteOutlinedIcon
@@ -66,7 +64,7 @@ const Cart = () => {
             ))}
             <div className="total">
                 <span>Tổng tiền</span>
-                <span>VND {totalPrice()} đ</span>
+                <span>VND <CurrencyFormatter amount={totalPrice()}/> đ</span>
             </div>
             <button onClick={handlePayment}>Thanh toán</button>
             <span className="reset" onClick={() => dispatch(resetCart())}>

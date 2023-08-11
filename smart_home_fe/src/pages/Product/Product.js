@@ -6,6 +6,7 @@ import useFetch from "../../hooks/useFetch";
 import {useParams} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {addToCart} from "../../redux/cartReducer";
+import {CurrencyFormatter} from "../../components/ConvertUnit/UnitPublic";
 
 const Product = () => {
   const id = useParams().id;
@@ -54,7 +55,7 @@ const Product = () => {
           </div>
           <div className="right">
             <h1>{data?.title}</h1>
-            <span className="price">VND {data?.price} đ</span>
+            <span className="price">VND <CurrencyFormatter amount={data?.price}/> đ</span>
             <p>{data?.desc}</p>
             <div className="quantity">
               <button

@@ -4,15 +4,18 @@ import { useParams } from "react-router-dom";
 import List from "../../components/List/List";
 import useFetch from "../../hooks/useFetch";
 import "./Products.css";
+import {Field, Form, Formik} from "formik";
+import *as Yup from "yup";
 
 const Products = () => {
   const catId = parseInt(useParams().id);
   const [maxPrice, setMaxPrice] = useState(1000);
   const [sort, setSort] = useState(null);
   const [selectedSubCats, setSelectedSubCats] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const { data, loading, error } = useFetch(
-    `/sub-categories?[filters][categories][id][$eq]=${catId}`
+    `/sub-categories?`
   );
   useEffect(() => {
     document.title = "Loại sản phẩm"; // Thay đổi title
@@ -30,11 +33,20 @@ const Products = () => {
     );
   };
 
+  const searchByNameValidationSchema = Yup.object().shape({
+    searchByName: Yup.string(),
+  });
+
+  const searchByCategoryValidationSchema = Yup.object().shape({
+    searchByCategory: Yup.string(),
+  });
+
+
   return (
     <div className="products">
       <div className="left">
         <div className="filterItem">
-          <h2>Product Categories</h2>
+          <h2>Danh mục sản phẩm</h2>
           {data?.map((item) => (
             <div className="inputItem" key={item.id}>
               <input
@@ -48,7 +60,7 @@ const Products = () => {
           ))}
         </div>
         <div className="filterItem">
-          <h2>Filter by price</h2>
+          <h2>Tìm kiếm theo giá</h2>
           <div className="inputItem">
             <span>0</span>
             <input
@@ -61,7 +73,7 @@ const Products = () => {
           </div>
         </div>
         <div className="filterItem">
-          <h2>Sort by</h2>
+          <h2>Sắp xếp</h2>
           <div className="inputItem">
             <input
               type="radio"
@@ -70,7 +82,7 @@ const Products = () => {
               name="price"
               onChange={(e) => setSort("asc")}
             />
-            <label htmlFor="asc">Price (Lowest first)</label>
+            <label htmlFor="asc">Thấp (Thấp nhất)</label>
           </div>
           <div className="inputItem">
             <input
@@ -80,9 +92,54 @@ const Products = () => {
               name="price"
               onChange={(e) => setSort("desc")}
             />
-            <label htmlFor="desc">Price (Highest first)</label>
+            <label htmlFor="desc">Cao (Cao nhất)</label>
           </div>
         </div>
+        <Formik
+            initialValues={{ searchByName: "", searchByCategory: "" }}
+            onSubmit={() => {}}
+            validationSchema={searchByNameValidationSchema}
+        >
+          {({ handleChange, handleBlur, values }) => (
+              <Form>
+                <div className="filterItem">
+                  <h2>Tìm kiếm theo tên</h2>
+                  <div className="inputItem">
+                    <Field
+                        type="text"
+                        name="searchByName"
+                        placeholder="Nhập tên sản phẩm"
+                    />
+                    <button type="submit">Tìm kiếm</button>
+                  </div>
+                </div>
+              </Form>
+          )}
+        </Formik>
+        <Formik
+            initialValues={{ searchByCategory: "" }}
+            onSubmit={() => {}}
+            validationSchema={searchByCategoryValidationSchema}
+        >
+          {({ handleChange, handleBlur, values }) => (
+              <Form>
+                <div className="filterItem">
+                  <h2>Tìm kiếm theo loại</h2>
+                  <div className="inputItem">
+                    <Field name="searchByCategory" as="select">
+                      <option value="">Chọn loại sản phẩm</option>
+                      {categories.map((category) => (
+                          <option key={category.id} value={category.id}>
+                            {category.name}
+                          </option>
+                      ))}
+                    </Field>
+                    <button type="submit">Tìm kiếm</button>
+                  </div>
+                </div>
+              </Form>
+          )}
+        </Formik>
       </div>
       <div className="right">
         <img
@@ -92,6 +149,7 @@ const Products = () => {
         />
         <List catId={catId} maxPrice={maxPrice} sort={sort} subCats={selectedSubCats}/>
       </div>
+
     </div>
   );
 };
