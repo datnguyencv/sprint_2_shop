@@ -82,7 +82,7 @@ const Products = () => {
               name="price"
               onChange={(e) => setSort("asc")}
             />
-            <label htmlFor="asc">Thấp (Thấp nhất)</label>
+            <label htmlFor="asc">Giá (Thấp nhất)</label>
           </div>
           <div className="inputItem">
             <input
@@ -92,7 +92,7 @@ const Products = () => {
               name="price"
               onChange={(e) => setSort("desc")}
             />
-            <label htmlFor="desc">Cao (Cao nhất)</label>
+            <label htmlFor="desc">Giá (Cao nhất)</label>
           </div>
         </div>
         <Formik
@@ -144,7 +144,7 @@ const Products = () => {
       <div className="right">
         <img
           className="catImg"
-          src="/img/banner.jpg" style={{height:"40%"}}
+          src="/img/banner.jpg" style={{height:"25vw"}}
           alt=""
         />
         <List catId={catId} maxPrice={maxPrice} sort={sort} subCats={selectedSubCats}/>
