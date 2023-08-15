@@ -6,20 +6,20 @@ import { CurrencyFormatter } from '../ConvertUnit/UnitPublic';
 const Card = ({ item }) => {
   console.log(item);
   return (
-    <Link className="link" to={`/product/${item.id}`}>
+    <Link className="link" to={`/product-detail/${item.productId}`}>
       <div className="card">
         <div className="image">
-          {item?.isNew && <span>Hàng mới về</span>}
+          <span>{item?.productUnit.name}</span>
           <img
             src={
-              item?.img
+              item?.imageList?.[0]
             }
             alt=""
             className="mainImg"
           />
           <img
             src={
-              item?.img2
+              item?.imageList?.[1]
             }
             alt=""
             className="secondImg"
@@ -27,7 +27,7 @@ const Card = ({ item }) => {
         </div>
         <h2>{item?.title}</h2>
         <div className="prices">
-          <h3>VND {(item?.oldPrice)? <CurrencyFormatter amount={item.oldPrice} /> : <CurrencyFormatter amount={item?.price + 5000} />} đ</h3>
+          <h3>VND {(item?.price)? <CurrencyFormatter amount={item.price} /> : <CurrencyFormatter amount={item?.price + 5000} />} đ</h3>
           <h3>VND <CurrencyFormatter amount={item?.price}/> đ</h3>
         </div>
       </div>

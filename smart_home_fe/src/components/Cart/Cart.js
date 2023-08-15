@@ -50,7 +50,7 @@ const Cart = () => {
                 <div className="item" key={item.id}>
                     <img src={item.img} alt=""/>
                     <div className="details">
-                        <Link to={`/product/${item.id}`} onClick={(e) => handleClick()}>{item.title}</Link>
+                        <Link to={`/product-detail/${item.id}`} onClick={(e) => handleClick()}>{item.title}</Link>
                         <p>{item.desc?.substring(0, 100)}</p>
                         <div className="price">
                             Số lượng {item.quantity} x VND <CurrencyFormatter amount={item.price}/> đ

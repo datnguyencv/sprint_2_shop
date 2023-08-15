@@ -6,7 +6,7 @@ import useFetch from "../../hooks/useFetch";
 const FeaturedProducts = ({type}) => {
 
     const {data, loading, error} = useFetch(
-        `/products`
+        `product/list`
     );
 
     return (
@@ -30,7 +30,7 @@ const FeaturedProducts = ({type}) => {
                     ? "Something went wrong!"
                     : loading
                         ? "loading"
-                        : data?.map((item) => <Card item={item} key={item.id}/>)}
+                        : data?.map((item) => <Card item={item} key={item.productId}/>)}
             </div>
         </div>
     );

@@ -4,6 +4,8 @@ import com.example.smart_home.model.product.Product;
 import com.example.smart_home.repository.IProductRepository;
 import com.example.smart_home.serivce.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,8 +20,13 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<Product> findAllByName(String nameSearch) {
-        return this.productRepository.findAllByName(nameSearch);
+    public Page<Product> findAllPage(Pageable pageable) {
+        return productRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Product> findAllByName(String nameSearch, Pageable pageable) {
+        return this.productRepository.findAllByName(nameSearch, pageable);
     }
 
     @Override

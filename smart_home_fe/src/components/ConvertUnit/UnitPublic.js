@@ -6,6 +6,6 @@ export function DateFormatter({ date }) {
     return <span>{formattedDate}</span>;
 }
 export function CurrencyFormatter({ amount }) {
-    const formattedAmount = amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    const formattedAmount = amount?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     return <span>{formattedAmount}</span>;
 }
