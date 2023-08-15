@@ -5,8 +5,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {removeItem, resetCart} from "../../redux/cartReducer";
 import {Link} from "react-router-dom";
 import {CurrencyFormatter} from "../ConvertUnit/UnitPublic";
-// import { makeRequest } from "../../makeRequest";
-// import { loadStripe } from "@stripe/stripe-js";
 
 const Cart = () => {
     const products = useSelector((state) => state.cart.products);
@@ -26,22 +24,9 @@ const Cart = () => {
         return total.toFixed(0);
     };
 
-    // const stripePromise = loadStripe(
-    //   "pk_test_eOTMlr8usx1ctymXqrik0ls700lQCsX2UB"
-    // );
+
     const handlePayment = async () => {
-        //   try {
-        //     const stripe = await stripePromise;
-        //     const res = await makeRequest.post("/orders", {
-        //       products,
-        //     });
-        //     await stripe.redirectToCheckout({
-        //       sessionId: res.data.stripeSession.id,
-        //     });
-        //
-        //   } catch (err) {
-        //     console.log(err);
-        //   }
+
     };
     return (
         <div className="cart" style={{ display: open ? 'block' : 'none' }}>
