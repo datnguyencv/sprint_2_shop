@@ -1,7 +1,7 @@
 import React from "react";
 import "./Card.css";
 import { Link } from "react-router-dom";
-import { CurrencyFormatter } from '../ConvertUnit/UnitPublic';
+import { CurrencyFormatter } from '../Units/UnitPublic';
 
 const Card = ({ item }) => {
   console.log(item);

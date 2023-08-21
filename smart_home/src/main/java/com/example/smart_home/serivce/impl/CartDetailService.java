@@ -40,10 +40,10 @@ public class CartDetailService implements ICartDetailService {
         return cartDetailRepository.findById(cartDetailId).orElse(null);
     }
 
-    @Override
-    public void deleteByProductId(Integer cartId, Integer productId) {
-        cartDetailRepository.deleteCartDetailByCartCartIdAndProductProductId(cartId, productId);
-    }
+//    @Override
+//    public void deleteByProductId(Integer cartId, Integer productId) {
+//        cartDetailRepository.deleteCartDetailByCartIdAndProductId(cartId, productId);
+//    }
 
     @Override
     public void updateQuantityOfCartDetail(int quantity, Integer cartDetailId) {

@@ -16,13 +16,15 @@ public class AccountDetails implements UserDetails {
 
     private static final Integer serialVersionUID = 1;
     private String username;
+    private Integer id;
 
     @JsonIgnore
     private String password;
     List<GrantedAuthority> authorities = null;
 
-    public AccountDetails(String username, String password,
+    public AccountDetails(Integer id, String username, String password,
                           List<GrantedAuthority> authorities) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.authorities = authorities;
@@ -33,6 +35,7 @@ public class AccountDetails implements UserDetails {
                 .map(role -> new SimpleGrantedAuthority(role.getRole().getRoleName()))
                 .collect(Collectors.toList());
         return new AccountDetails(
+                account.getAccountId(),
                 account.getUsername(),
                 account.getPassword(),
                 authorities);
@@ -82,5 +85,8 @@ public class AccountDetails implements UserDetails {
             return false;
         AccountDetails account = (AccountDetails) o;
         return Objects.equals(username, account.username);
+    }
+    public Integer getId() {
+        return id;
     }
 }

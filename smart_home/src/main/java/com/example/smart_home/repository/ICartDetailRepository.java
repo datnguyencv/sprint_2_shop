@@ -46,7 +46,7 @@ public interface ICartDetailRepository extends JpaRepository<CartDetail, Integer
             "WHERE c.account_id = :id and cd.is_delete = 0 and cd.purchase_history_id is null", nativeQuery = true)
     List<Integer> findAllvCartDetailByAccountIdAndIsDelete(@Param("id") Integer accountId);
 
-    void deleteCartDetailByCartCartIdAndProductProductId(Integer cartId, Integer productId);
+//    void deleteCartDetailByCartIdAndProductId(Integer cartId, Integer productId);
 
     @Modifying
     @Query(value = "update cart_detail set quantity = :quantity where cart_detail_id = :id", nativeQuery = true)

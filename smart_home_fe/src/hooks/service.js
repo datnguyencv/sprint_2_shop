@@ -1,19 +1,15 @@
-import axios from 'axios';
+import { makeRequest } from "../makeRequest";
 
 export const postLogin = async (request) => {
-    debugger
-    // const token = localStorage.getItem('token')
-
-    const res = await axios.post("http://localhost:8080/api/public/login", request);
+    const res = await makeRequest.post("public/login", request);
     return res.data;
 }
 
 export const getEmail = async (genericRequest) => {
     try {
-        const res = await axios.post(`http://localhost:8080/forgot_password`, genericRequest);
+        const res = await makeRequest.post(`forgot_password`, genericRequest);
         console.log(res);
         return res;
-        // return res;
     } catch(error){
         console.error("loi hien thi");
     }
@@ -21,10 +17,9 @@ export const getEmail = async (genericRequest) => {
 
 export const postResetPassword = async (genericRequest) => {
     try {
-        const res = await axios.post(`http://localhost:8080/reset_password`, genericRequest);
+        const res = await makeRequest.post(`reset_password`, genericRequest);
         console.log(res);
         return res;
-        // return res;
     } catch(error){
         console.error("loi hien thi");
     }
@@ -32,10 +27,9 @@ export const postResetPassword = async (genericRequest) => {
 
 export const getError = async () => {
     try {
-        const res = await axios.post(`http://localhost:8080/403`);
+        const res = await makeRequest.post(`403`);
         console.log(res);
         return res;
-        // return res;
     } catch(error){
         console.error("loi hien thi");
     }

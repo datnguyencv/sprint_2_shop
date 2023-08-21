@@ -6,7 +6,7 @@ import useFetch from "../../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/cartReducer";
-import { CurrencyFormatter } from "../../components/ConvertUnit/UnitPublic";
+import { CurrencyFormatter } from "../../components/Units/UnitPublic";
 
 const Product = () => {
   const id = parseInt(useParams().id);

@@ -15,7 +15,7 @@ const Products = () => {
   const [categories, setCategories] = useState([]);
 
   const { data, loading, error } = useFetch(
-    `/sub-categories?`
+    `/productType?`
   );
   useEffect(() => {
     document.title = "Loại sản phẩm"; // Thay đổi title
@@ -37,30 +37,25 @@ const Products = () => {
     searchByName: Yup.string(),
   });
 
-  const searchByCategoryValidationSchema = Yup.object().shape({
-    searchByCategory: Yup.string(),
-  });
-
-
   return (
     <div className="products">
       <div className="left">
         <div className="filterItem">
-          <h2>Danh mục sản phẩm</h2>
+          <h4>Danh mục sản phẩm</h4>
           {data?.map((item) => (
             <div className="inputItem" key={item.id}>
               <input
                 type="checkbox"
-                id={item.id}
-                value={item.id}
+                id={item?.id}
+                value={item?.productTypeName}
                 onChange={handleChange}
               />
-              <label htmlFor={item.id}>{item.title}</label>
+              <label htmlFor={item.id}>{item?.productTypeName}</label>
             </div>
           ))}
         </div>
         <div className="filterItem">
-          <h2>Tìm kiếm theo giá</h2>
+          <h4>Tìm kiếm theo giá</h4>
           <div className="inputItem">
             <span>0</span>
             <input
@@ -73,7 +68,7 @@ const Products = () => {
           </div>
         </div>
         <div className="filterItem">
-          <h2>Sắp xếp</h2>
+          <h4>Sắp xếp</h4>
           <div className="inputItem">
             <input
               type="radio"
@@ -96,44 +91,20 @@ const Products = () => {
           </div>
         </div>
         <Formik
-            initialValues={{ searchByName: "", searchByCategory: "" }}
+            initialValues={{ searchByName: "" }}
             onSubmit={() => {}}
             validationSchema={searchByNameValidationSchema}
         >
           {({ handleChange, handleBlur, values }) => (
               <Form>
                 <div className="filterItem">
-                  <h2>Tìm kiếm theo tên</h2>
+                  <h4>Tìm kiếm theo tên</h4>
                   <div className="inputItem">
                     <Field
                         type="text"
                         name="searchByName"
                         placeholder="Nhập tên sản phẩm"
                     />
-                    <button type="submit">Tìm kiếm</button>
-                  </div>
-                </div>
-              </Form>
-          )}
-        </Formik>
-        <Formik
-            initialValues={{ searchByCategory: "" }}
-            onSubmit={() => {}}
-            validationSchema={searchByCategoryValidationSchema}
-        >
-          {({ handleChange, handleBlur, values }) => (
-              <Form>
-                <div className="filterItem">
-                  <h2>Tìm kiếm theo loại</h2>
-                  <div className="inputItem">
-                    <Field name="searchByCategory" as="select">
-                      <option value="">Chọn loại sản phẩm</option>
-                      {categories.map((category) => (
-                          <option key={category.id} value={category.id}>
-                            {category.name}
-                          </option>
-                      ))}
-                    </Field>
                     <button type="submit">Tìm kiếm</button>
                   </div>
                 </div>

@@ -34,6 +34,7 @@
 .inputItem {
   display: flex;
   align-items: center;
+  color: #007bff;
 }
 
 input[type="text"],

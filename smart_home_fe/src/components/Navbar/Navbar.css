@@ -1,15 +1,17 @@
-.navbar {
-  height: 120px;
-  position: sticky;
-  top: 0;
-  z-index: 9;
-  background-color: whitesmoke;
-}
+/*.navbar {*/
+/*  height: 120px;*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  z-index: 9;*/
+/*  background-color: whitesmoke;*/
+/*  width: 100%;*/
+/*}*/
 .navbar .wrapper {
   padding: 10px 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 }
 .navbar .wrapper .item {
   display: flex;
@@ -95,3 +97,77 @@
   position: relative;
   display: inline-block;
 }
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .navbar .wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar .wrapper .left,
+  .navbar .wrapper .right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .navbar .wrapper .right .icons {
+    gap: 10px;
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .navbar .wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar .wrapper .left,
+  .navbar .wrapper .center,
+  .navbar .wrapper .right {
+    width: 100%; /* Expand to full width */
+  }
+
+  .navbar .wrapper .left,
+  .navbar .wrapper .right {
+    padding: 10px; /* Add padding for spacing */
+  }
+
+  .navbar .wrapper .right {
+    border-top: 1px solid #ccc; /* Add a separator between right and center sections */
+  }
+
+  .navbar .wrapper .right .icons {
+    flex-direction: row; /* Align icons horizontally */
+    justify-content: flex-end; /* Align icons to the right */
+    padding: 10px; /* Add padding for spacing */
+  }
+
+  .navbar .wrapper .right .icons .cartIcon {
+    position: static; /* Remove positioning */
+    margin-left: 10px; /* Add margin for spacing */
+  }
+
+  .navbar .wrapper .right .icons .cartIcon span {
+    top: auto; /* Reset positioning */
+    margin-left: 5px; /* Adjust margin for spacing */
+  }
+
+  .navbar .wrapper .right .icons .box-text {
+    padding: 0 10px; /* Add padding for spacing */
+  }
+
+  .navbar .wrapper .right .icons .dropdown {
+    position: static; /* Remove positioning */
+    display: none; /* Hide dropdown */
+  }
+}
+
+
+
+
+
+
+

@@ -41,6 +41,7 @@
 .card .prices {
   display: flex;
   gap: 20px;
+  margin: auto;
 }
 .card .prices h3 {
   font-size: 18px;

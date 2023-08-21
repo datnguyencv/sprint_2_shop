@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const makeRequest = axios.create({
   baseURL:   'http://localhost:8080/api/',
-  // headers: {
-  //   Authorization: "bearer",
-  // },
+  headers: {
+    'Authorization': 'Bearer ' + sessionStorage.getItem("TOKEN"),
+  },
 });

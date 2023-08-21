@@ -42,3 +42,8 @@
   height: 100%;
   object-fit: cover;
 }
+
+.link-name{
+  color: #007bff;
+  text-decoration: none;
+}
