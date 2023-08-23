@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./Cart.css";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import {useDispatch, useSelector} from "react-redux";
@@ -9,11 +9,12 @@ import * as Swal from "sweetalert2";
 import * as Alert from "../Units/Alert";
 import {PayPalButtons, PayPalScriptProvider} from '@paypal/react-paypal-js';
 import {makeRequest} from "../../makeRequest";
+import {handleAddToCart} from "../Units/AddCart";
+import {FetchCartApi} from "../Units/FetchCart";
 
 
 const Cart = () => {
         const products = useSelector((state) => state.cart.products);
-        const dispatch = useDispatch();
         const [open, setOpen] = useState(true);
         const [total, setTotal] = useState(0);
         const navigate = useNavigate();
@@ -22,39 +23,11 @@ const Cart = () => {
         const [quantity, setQuantity] = useState(1);
         const [paymentError, setPaymentError] = useState('');
 
+        const dispatch = useDispatch();
 
-        const handleAddToCart = async () => {
-            let res = null;
-            try {
-                for (const product of products) {
-                    const productId = product.id;
-                    const quantity = product.quantity;
-
-                    res = await makeRequest.post(`cart/addCart/${productId}/${quantity}`);
-                }
-
-                await Swal.fire({
-                    icon: 'success',
-                    title: 'Giỏ hàng đã được lưu thành công.',
-                    showConfirmButton: false,
-                    timer: 1000,
-                });
-
-            } catch
-                (error) {
-                const errorMessage = res?.data ? res.data : 'Lỗi khi thêm giỏ hàng.';
-                console.log(errorMessage)
-                await Swal.fire({
-                    icon: 'error',
-                    title: (errorMessage),
-                    text: "Quá số lượng sản phẩm trong kho",
-                    showConfirmButton: false,
-                    timer: 2000,
-                });
-                console.error('Lỗi khi thêm giỏ hàng:', error);
-            }
-        };
-
+        useEffect(() => {
+            FetchCartApi(dispatch);
+        }, [dispatch]);
 
         const handleClick = (e, id) => {
             setOpen(false);
@@ -102,7 +75,14 @@ const Cart = () => {
         return (
             <div className="cart" style={{display: open ? 'block' : 'none'}}>
                 {/*// Add a close button on top for mobile*/}
-                <button onClick={() => setOpen(false)} style={{border: 'none', color: 'red', background: 'rgba(42,207,222,0.66)', position: 'absolute', right: '10px', top: '10px'}}>
+                <button onClick={() => setOpen(false)} style={{
+                    border: 'none',
+                    color: 'red',
+                    background: 'rgba(42,207,222,0.66)',
+                    position: 'absolute',
+                    right: '10px',
+                    top: '10px'
+                }}>
                     X
                 </button>
                 <h1>Giỏ hàng của bạn</h1>
@@ -145,7 +125,8 @@ const Cart = () => {
                     <span>Tổng tiền</span>
                     <span>VND <CurrencyFormatter amount={totalPrice()}/> đ</span>
                 </div>
-                <button className="btn btn-primary" onClick={() => handleAddToCart()}>Lưu giỏ hàng</button>
+                <button className="btn btn-primary" onClick={() => handleAddToCart(products)}>Lưu giỏ hàng</button>
+                <button className="btn btn-success" onClick={() => FetchCartApi()}>Cập nhật giỏ hàng</button>
                 <span className="reset btn btn-danger" onClick={
                     () => Alert.swalWithBootstrapButtons.fire({
                         icon: "warning",
@@ -183,7 +164,7 @@ const Cart = () => {
                         }}
                         onApprove={(data, actions) => {
                             const total = totalPrice();
-                            return actions.order.capture().then( async () => {
+                            return actions.order.capture().then(async () => {
                                 await makeRequest.post(`cart/cart-detail/purchaseHistory/${total}`)
                                 await Swal.fire({
                                     icon: 'success',

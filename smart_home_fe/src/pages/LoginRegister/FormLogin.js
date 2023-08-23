@@ -9,18 +9,40 @@ import {useNavigate} from "react-router-dom";
 import {postLogin} from "../../hooks/service";
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
+import {addToCart} from "../../redux/cartReducer";
+import {makeRequest} from "../../makeRequest";
+import {useDispatch} from "react-redux";
 
 
 const FormLogin = () => {
     const [isSignUp, setIsSignUp] = useState(false);
-    const navigate = useNavigate();
-
+    const dispatch = useDispatch();
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [failedAccount, setFailedAccount] = useState(null);
 
     const handleSignInClick = () => {
         setIsSignUp(false);
     };
+
+    const shoppingCartApi = async () => {
+        await makeRequest.get("cart/cart-detail/unpay/")
+            .then((response) => {
+                const cartItemsFromDatabase = response.data;
+                cartItemsFromDatabase.forEach((item) => {
+                    dispatch(addToCart({
+                        id: item.productId,
+                        name: item.productName,
+                        desc: item.description,
+                        price: item.price,
+                        img: item.imageList?.[0],
+                        quantity: +item.quantity
+                    }))
+                });
+            })
+            .catch((error) => {
+                console.error('Lỗi khi lấy thông tin giỏ hàng:', error);
+            })
+    }
 
     // useEffect(async () => {
     //    document.title = "Trang đăng nhập";
@@ -52,6 +74,7 @@ const FormLogin = () => {
                                 sessionStorage.setItem('USERNAME', e.username);
                                 sessionStorage.setItem('roles', e.roles[0])
                                 window.location.href = '/';
+                                shoppingCartApi();
                             })
                             .catch(() => {
                                     setFailedAccount("Tên tài khoản hoặc mật khẩu không đúng")

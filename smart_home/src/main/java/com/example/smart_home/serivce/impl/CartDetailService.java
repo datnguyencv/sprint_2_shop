@@ -42,7 +42,7 @@ public class CartDetailService implements ICartDetailService {
 
     @Override
     public CartDetail findById(Integer cartDetailId) {
-        return cartDetailRepository.findById(cartDetailId).orElse(null);
+        return cartDetailRepository.findCartDetailVByIdAndIsDelete(cartDetailId);
     }
 
 //    @Override

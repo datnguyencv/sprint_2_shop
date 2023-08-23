@@ -10,7 +10,7 @@ import java.util.Set;
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart_id")
+    @Column(name = "carts_id")
     private Integer cartId;
     @Column(columnDefinition = "DATE")
     private String dateOrder;

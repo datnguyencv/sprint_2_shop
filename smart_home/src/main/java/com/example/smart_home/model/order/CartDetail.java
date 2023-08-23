@@ -12,7 +12,7 @@ public class CartDetail {
     private Integer cartDetailId;
     private int quantity;
     @ManyToOne
-    @JoinColumn(name = "cart_id",referencedColumnName = "cart_id")
+    @JoinColumn(name = "cart_id",referencedColumnName = "carts_id")
     private Cart cart;
     @ManyToOne
     @JoinColumn(name = "product_id",referencedColumnName = "product_id")

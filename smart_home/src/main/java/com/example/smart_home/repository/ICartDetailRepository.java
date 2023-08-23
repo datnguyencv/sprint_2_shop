@@ -10,13 +10,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public interface ICartDetailRepository extends JpaRepository<CartDetail, Integer> {
     @Modifying
-    @Query(value = "SELECT c.cart_id as cartId, cd.cart_detail_id as cartDetailId, p.product_name as productName, p.description as description,\n" +
+    @Query(value = "SELECT c.carts_id as cartId, cd.cart_detail_id as cartDetailId, p.product_name as productName, p.description as description,\n" +
             "            p.price as price, cd.quantity as quantity, p.product_id as productId, p.inventory_level as inventoryLevel\n" +
-            "            FROM cart_detail cd join cart c on cd.cart_id = c.cart_id\n" +
+            "            FROM cart_detail cd join cart c on cd.cart_id = c.carts_id\n" +
             "            join product p on p.product_id = cd.product_id\n" +
             "            where c.account_id = :id and cd.is_delete =0", nativeQuery = true)
     List<ICartDetailDto> findAllCartDetailByAccountId(@Param("id") Integer accountId);
@@ -28,7 +29,7 @@ public interface ICartDetailRepository extends JpaRepository<CartDetail, Integer
             "            JOIN cart c ON cd.cart_id = c.cart_id\n" +
             "            JOIN product p ON p.product_id = cd.product_id\n" +
             "            JOIN purchase_history ph ON ph.purchase_history_id = cd.purchase_history_id\n" +
-            "            WHERE ph.purchase_history_id = :id and cd.is_delete = 0", nativeQuery = true)
+            "            WHERE ph.purchase_history_id = :id and cd.is_delete = 1", nativeQuery = true)
     List<ICartDetailDtoCheck> findAllvCartDetailByPurchaseHistory(@Param("id") Integer purchaseHistory);
 
     @Query(value = "SELECT c.cart_id as cartId, cd.cart_detail_id as cartDetailId, p.product_name as productName, p.description as `description`,\n" +
@@ -46,7 +47,7 @@ public interface ICartDetailRepository extends JpaRepository<CartDetail, Integer
             "WHERE c.account_id = :id and cd.is_delete = 0 and cd.purchase_history_id is null", nativeQuery = true)
     List<Integer> findAllvCartDetailByAccountIdAndIsDelete(@Param("id") Integer accountId);
 
-//    void deleteCartDetailByCartIdAndProductId(Integer cartId, Integer productId);
+    void deleteCartDetailByCartIdAndProductId(Integer cartId, Integer productId);
 
     @Modifying
     @Query(value = "update cart_detail set quantity = :quantity where cart_detail_id = :id", nativeQuery = true)
@@ -62,6 +63,9 @@ public interface ICartDetailRepository extends JpaRepository<CartDetail, Integer
     @Query(value = "select * from cart_detail cd where cd.cart_detail_id = :id and cd.is_delete = 0", nativeQuery = true)
     CartDetail findCartDetailVByIdAndIsDelete(@Param("id") Integer id);
 
-    @Query(value = "select * from cart_detail cd where cd.cart_detail_id = :id and cd.is_delete = 0 and cd.purchase_history_id is null", nativeQuery = true)
+    @Query(value = "SELECT * FROM cart_detail cd " +
+            "JOIN cart c ON cd.cart_id = c.carts_id " +
+            "WHERE c.account_id = :accountId AND cd.is_delete = 0 AND cd.purchase_history_id IS NULL", nativeQuery = true)
     List<ICartDetailDtoCheck> findAllvCartDetailByAccountIdUnPay(Integer accountId);
+
 }

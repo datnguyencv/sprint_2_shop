@@ -10,6 +10,7 @@ import Cart from "../Cart/Cart";
 import {useSelector} from "react-redux";
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
+import {handleAddToCart} from "../Units/AddCart";
 
 const Navbar = () => {
     const [open, setOpen] = useState(false)
@@ -32,6 +33,7 @@ const Navbar = () => {
         }
     }, [token]);
     const handlerLogout = () => {
+        handleAddToCart(products);
         sessionStorage.removeItem("TOKEN");
         sessionStorage.removeItem("USERNAME");
         sessionStorage.removeItem("roles");
@@ -161,7 +163,7 @@ const Navbar = () => {
                     <div className="icons">
                         <SearchIcon/>
                         <PersonOutlineOutlinedIcon/>
-                        {!token && (<NavLink className="nav-link" to="/form-login">Login</NavLink>)}
+                        {!token && (<NavLink className="nav-link" to="/form-login">Đăng nhập</NavLink>)}
 
                         <span className="box-text">
           <span className="txtnw" onClick={handleUsernameClick}>

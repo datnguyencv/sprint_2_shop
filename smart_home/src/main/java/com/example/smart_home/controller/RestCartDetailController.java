@@ -37,7 +37,7 @@ public class RestCartDetailController {
     @Autowired
     private IPurchaseService purchaseService;
 
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("addCart/{productId}/{quantity}")
     public ResponseEntity<?> saveCartDetailByUserIdAndProductId(@PathVariable Integer productId,
                                                                 @PathVariable int quantity) {
@@ -76,7 +76,7 @@ public class RestCartDetailController {
         return new ResponseEntity<>(cartDetail1, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("")
     public ResponseEntity<List<ICartDetailDtoCheck>> findAllCartByAccountId() {
         Integer userId = ((AccountDetails) (SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getId();
@@ -84,22 +84,22 @@ public class RestCartDetailController {
         return new ResponseEntity<>(cartDetailDtoList, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("cart-detail/{cartId}/{productId}")
     public ResponseEntity<?> deleteCartDetailByProductId(@PathVariable Integer cartId, @PathVariable Integer productId) {
         this.cartService.deleteByCartId(cartId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("cart-detail/unpay/")
-    public ResponseEntity<?> updateQuantityOfCartDetailByCartDetailId() {
+    public ResponseEntity<?> updateCartDetailByCartDetailId() {
         Integer userId = ((AccountDetails) (SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getId();
         List<ICartDetailDtoCheck> cartDetailDtoList = cartDetailService.findvAllByAccountIdUnPay(userId);
         return new ResponseEntity<>(cartDetailDtoList, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("cart-detail/purchaseHistory/list/")
     public ResponseEntity<?> findAllPurchaseHistoryByAccountId() {
         Integer userId = ((AccountDetails) (SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getId();
@@ -107,14 +107,14 @@ public class RestCartDetailController {
         return new ResponseEntity<>(purchaseHistories, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("cart-detail/purchaseHistory/detail/{purchaseHistoryId}")
     public ResponseEntity<List<ICartDetailDtoCheck>> findAllPurchaseHistoryByPurchaseHistoryId(@PathVariable Integer purchaseHistoryId) {
         List<ICartDetailDtoCheck> purchaseHistoriesDetail = this.cartDetailService.findAllvCartDetailByPurchaseHistory(purchaseHistoryId);
         return new ResponseEntity<>(purchaseHistoriesDetail, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("cart-detail/purchaseHistory/{total}")
     public ResponseEntity<?> addNewPurchaseHistory(
             @PathVariable double total) {
@@ -134,6 +134,7 @@ public class RestCartDetailController {
         this.purchaseService.save(purchaseHistory);
         for (Integer num : cartDetailDto2s) {
             CartDetail cartDetail = cartDetailService.findByIdAnIsDelete(num);
+            cartDetail.setDelete(true);
             cartDetail.setPurchaseHistory(purchaseHistory);
             this.cartDetailService.save(cartDetail);
         }
