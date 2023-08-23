@@ -20,6 +20,8 @@ const Cart = () => {
 
         const [productId, setProductId] = useState(0);
         const [quantity, setQuantity] = useState(1);
+        const [paymentError, setPaymentError] = useState('');
+
 
         const handleAddToCart = async () => {
             let res = null;
@@ -31,12 +33,12 @@ const Cart = () => {
                     res = await makeRequest.post(`cart/addCart/${productId}/${quantity}`);
                 }
 
-                    await Swal.fire({
-                        icon: 'success',
-                        title: 'Giỏ hàng đã được lưu thành công.',
-                        showConfirmButton: false,
-                        timer: 1000,
-                    });
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Giỏ hàng đã được lưu thành công.',
+                    showConfirmButton: false,
+                    timer: 1000,
+                });
 
             } catch
                 (error) {
@@ -45,8 +47,9 @@ const Cart = () => {
                 await Swal.fire({
                     icon: 'error',
                     title: (errorMessage),
+                    text: "Quá số lượng sản phẩm trong kho",
                     showConfirmButton: false,
-                    timer: 1000,
+                    timer: 2000,
                 });
                 console.error('Lỗi khi thêm giỏ hàng:', error);
             }
@@ -74,19 +77,15 @@ const Cart = () => {
             });
             return total.toFixed(2);
         };
-
-        const [paymentError, setPaymentError] = useState(null);
-
         const handleSuccessPayment = async (total) => {
-            Swal.fire({
+            await makeRequest.post(`cart-detail/purchaseHistory/${total}`)
+            await Swal.fire({
                 icon: 'success',
                 title: 'Thanh toán thành công.',
                 showConfirmButton: false,
-                timer: 1000,
+                timer: 2000,
             });
-            await makeRequest.post(`cart-detail/purchaseHistory/${total}`).then(() => {
-                navigate('/history');
-            });
+            navigate('/detail');
         };
 
         const handleFailurePayment = (error) => {
@@ -96,23 +95,16 @@ const Cart = () => {
                 showConfirmButton: false,
                 timer: 1000,
             });
-            console.log(error);
             setPaymentError("Tài khoản PayPal của bạn không đủ tiền để thực hiện thanh toán.");
         };
 
-        const handleApprove = async (data, actions) => {
-            try {
-                await actions.order.capture();
-                console.log(actions.order.capture())
-                const total = totalPrice();
-                await handleSuccessPayment(total);
-            } catch (error) {
-                handleFailurePayment(error);
-            }
-        };
 
         return (
             <div className="cart" style={{display: open ? 'block' : 'none'}}>
+                {/*// Add a close button on top for mobile*/}
+                <button onClick={() => setOpen(false)} style={{border: 'none', color: 'red', background: 'rgba(42,207,222,0.66)', position: 'absolute', right: '10px', top: '10px'}}>
+                    X
+                </button>
                 <h1>Giỏ hàng của bạn</h1>
                 {products?.map((item) => (
                     <div className="item" key={item.id}>
@@ -130,7 +122,7 @@ const Cart = () => {
                                 () => Alert.swalWithBootstrapButtons.fire({
                                     icon: "warning",
                                     title: "Xác nhận xóa",
-                                    html: `Bạn có muốn xoá sản phẩm <span style="color: red">${item.title}</span> khỏi giỏ hàng không?`,
+                                    html: `Bạn có muốn xoá sản phẩm <span style="color: red">${item.productName}</span> khỏi giỏ hàng không?`,
                                     showCancelButton: true,
                                     cancelButtonText: 'Không',
                                     confirmButtonText: 'Có',
@@ -154,7 +146,25 @@ const Cart = () => {
                     <span>VND <CurrencyFormatter amount={totalPrice()}/> đ</span>
                 </div>
                 <button className="btn btn-primary" onClick={() => handleAddToCart()}>Lưu giỏ hàng</button>
-                <span className="reset btn btn-danger" onClick={() => dispatch(resetCart())}>
+                <span className="reset btn btn-danger" onClick={
+                    () => Alert.swalWithBootstrapButtons.fire({
+                        icon: "warning",
+                        title: "Xác nhận xóa",
+                        html: `Bạn muốn xoá toàn bộ giỏ hàng không?`,
+                        showCancelButton: true,
+                        cancelButtonText: 'Không',
+                        confirmButtonText: 'Có',
+                        reverseButtons: true
+                    }).then((res) => {
+                        if (res.isConfirmed) {
+                            dispatch(resetCart())
+                            Swal.fire({
+                                icon: "success",
+                                title: "Xóa thành công !",
+                                timer: 2000
+                            })
+                        }
+                    })}>
         Xoá giỏ hàng
       </span>
                 {paymentError && <p style={{color: 'red'}}>{paymentError}</p>}
@@ -171,7 +181,20 @@ const Cart = () => {
                                 ],
                             });
                         }}
-                        onApprove={handleApprove}
+                        onApprove={(data, actions) => {
+                            const total = totalPrice();
+                            return actions.order.capture().then( async () => {
+                                await makeRequest.post(`cart/cart-detail/purchaseHistory/${total}`)
+                                await Swal.fire({
+                                    icon: 'success',
+                                    title: 'Thanh toán thành công.',
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                });
+                                dispatch(resetCart())
+                                navigate('/detail');
+                            });
+                        }}
                     />
                 </PayPalScriptProvider>
             </div>

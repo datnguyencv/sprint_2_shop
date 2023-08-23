@@ -1,3 +1,47 @@
+/*!* ... Your existing CSS ... *!*/
+
+/*.navbar .navbar-brand {*/
+/*  margin: 0 auto;  !* Center the logo when the nav items are split on the left and right *!*/
+/*}*/
+
+/*.navbar-toggler {*/
+/*  border: none;  !* Remove border around the hamburger icon *!*/
+/*}*/
+
+/*.navbar-nav {*/
+/*  align-items: center;*/
+/*}*/
+
+/*.nav-link {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  gap: 5px;*/
+/*}*/
+
+/*.cartIcon {*/
+/*  position: relative;*/
+/*  cursor: pointer;*/
+/*}*/
+
+/*.cartIcon > span.cart-count {*/
+/*  position: absolute;*/
+/*  top: -5px;*/
+/*  right: -10px;*/
+/*  padding: 2px 5px;*/
+/*  border-radius: 50%;*/
+/*  background-color: #2879fe;*/
+/*  color: white;*/
+/*  font-size: 12px;*/
+/*}*/
+
+/*!* On smaller screens, adjust the position of the cart count *!*/
+/*@media (max-width: 768px) {*/
+/*  .cartIcon > span.cart-count {*/
+/*    right: -5px;*/
+/*  }*/
+/*}*/
+
+goc
 /*.navbar {*/
 /*  height: 120px;*/
 /*  position: absolute;*/
@@ -163,6 +207,54 @@
     position: static; /* Remove positioning */
     display: none; /* Hide dropdown */
   }
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+}
+
+/*Icon*/
+/* CSS để định dạng các phần tử */
+.dropdown-content {
+  position: absolute;
+  left: -5rem;
+  min-width: 10rem;
+  background-color: #fff; /* Màu nền */
+  border: 1px solid #ddd; /* Viền */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bóng đổ */
+  padding: 10px; /* Khoảng cách lề bên trong */
+  color: black; /* Màu chữ */
+  z-index: 1;
+}
+
+.dropdown-link {
+  display: block;
+  text-decoration: none;
+  color: black; /* Màu chữ */
+  padding: 5px 10px;
+}
+
+.detail-button {
+  display: inline-block;
+  background-color: #007bff;
+  color: #fff; /* Màu chữ trắng */
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-right: 10px;
+  width: 100%;
+}
+
+.logout-button {
+  display: inline-block;
+  background-color: #dc3545;
+  color: #fff; /* Màu chữ trắng */
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 

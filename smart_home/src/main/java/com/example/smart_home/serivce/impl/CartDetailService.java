@@ -26,6 +26,11 @@ public class CartDetailService implements ICartDetailService {
     }
 
     @Override
+    public List<ICartDetailDtoCheck> findvAllByAccountIdUnPay(Integer accountId) {
+        return cartDetailRepository.findAllvCartDetailByAccountIdUnPay(accountId);
+    }
+
+    @Override
     public List<Integer> findAllvCartDetailByAccountIdAndIsDelete(Integer accountId) {
         return cartDetailRepository.findAllvCartDetailByAccountIdAndIsDelete(accountId);
     }
@@ -50,10 +55,10 @@ public class CartDetailService implements ICartDetailService {
         cartDetailRepository.updateQuantityOfCartDetail(quantity, cartDetailId);
     }
 
-    @Override
-    public void deleteAllCartVDetail(Integer accountId) {
-        cartDetailRepository.deleteAllCartVDetail(accountId);
-    }
+//    @Override
+//    public void deleteAllCartVDetail(Integer accountId) {
+//        cartDetailRepository.deleteAllCartVDetail(accountId);
+//    }
 
     @Override
     public CartDetail findByIdAnIsDelete(Integer cartDetailId) {

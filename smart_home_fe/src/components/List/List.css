@@ -3,3 +3,21 @@
   justify-content: space-between;
   flex-wrap: wrap;
 }
+
+/*button loadmore*/
+
+button {
+  /*margin-top: 10px;*/
+  margin: auto;
+  border: 2px solid #383636;
+  color: #383636;
+  background-color: #fff;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-family: "Lato", sans-serif;
+}
+button:hover {
+  background-color: #383636;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}

@@ -1,25 +1,23 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import List from "../../components/List/List";
 import useFetch from "../../hooks/useFetch";
 import "./Products.css";
-import {Field, Form, Formik} from "formik";
-import *as Yup from "yup";
+import { Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import {setSearchTerm, setSortBy} from "../../redux/filterSlice";
 
 const Products = () => {
   const catId = parseInt(useParams().id);
-  const [maxPrice, setMaxPrice] = useState(1000);
-  const [sort, setSort] = useState(null);
   const [selectedSubCats, setSelectedSubCats] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const dispatch = useDispatch();
 
-  const { data, loading, error } = useFetch(
-    `/productType?`
-  );
+  const { data, loading, error } = useFetch("/productType?");
   useEffect(() => {
     document.title = "Loại sản phẩm"; // Thay đổi title
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
   }, []);
 
   const handleChange = (e) => {
@@ -27,9 +25,9 @@ const Products = () => {
     const isChecked = e.target.checked;
 
     setSelectedSubCats(
-      isChecked
-        ? [...selectedSubCats, value]
-        : selectedSubCats.filter((item) => item !== value)
+        isChecked
+            ? [...selectedSubCats, value]
+            : selectedSubCats.filter((item) => item !== value)
     );
   };
 
@@ -38,90 +36,68 @@ const Products = () => {
   });
 
   return (
-    <div className="products">
-      <div className="left">
+      <div className="products">
+        <div className="left">
         <div className="filterItem">
-          <h4>Danh mục sản phẩm</h4>
-          {data?.map((item) => (
-            <div className="inputItem" key={item.id}>
+            <h4>Sắp xếp</h4>
+            <div className="inputItem">
               <input
-                type="checkbox"
-                id={item?.id}
-                value={item?.productTypeName}
-                onChange={handleChange}
+                  type="radio"
+                  id="asc"
+                  value="asc"
+                  name="price"
+                  onChange={() => dispatch(setSortBy("asc"))}
               />
-              <label htmlFor={item.id}>{item?.productTypeName}</label>
+              <label htmlFor="asc">Giá (Thấp nhất)</label>
             </div>
-          ))}
-        </div>
-        <div className="filterItem">
-          <h4>Tìm kiếm theo giá</h4>
-          <div className="inputItem">
-            <span>0</span>
-            <input
-              type="range"
-              min={0}
-              max={1000}
-              onChange={(e) => setMaxPrice(e.target.value)}
-            />
-            <span>{maxPrice}</span>
+            <div className="inputItem">
+              <input
+                  type="radio"
+                  id="desc"
+                  value="desc"
+                  name="price"
+                  onChange={() => dispatch(setSortBy("desc"))}
+              />
+              <label htmlFor="desc">Giá (Cao nhất)</label>
+            </div>
           </div>
-        </div>
-        <div className="filterItem">
-          <h4>Sắp xếp</h4>
-          <div className="inputItem">
-            <input
-              type="radio"
-              id="asc"
-              value="asc"
-              name="price"
-              onChange={(e) => setSort("asc")}
-            />
-            <label htmlFor="asc">Giá (Thấp nhất)</label>
-          </div>
-          <div className="inputItem">
-            <input
-              type="radio"
-              id="desc"
-              value="desc"
-              name="price"
-              onChange={(e) => setSort("desc")}
-            />
-            <label htmlFor="desc">Giá (Cao nhất)</label>
-          </div>
-        </div>
-        <Formik
-            initialValues={{ searchByName: "" }}
-            onSubmit={() => {}}
-            validationSchema={searchByNameValidationSchema}
-        >
-          {({ handleChange, handleBlur, values }) => (
-              <Form>
-                <div className="filterItem">
-                  <h4>Tìm kiếm theo tên</h4>
-                  <div className="inputItem">
-                    <Field
-                        type="text"
-                        name="searchByName"
-                        placeholder="Nhập tên sản phẩm"
-                    />
-                    <button type="submit">Tìm kiếm</button>
+          <Formik
+              initialValues={{ searchByName: "" }}
+              onSubmit={(values) => {
+                dispatch(setSearchTerm(values.searchByName));
+              }}
+              validationSchema={searchByNameValidationSchema}
+          >
+            {({ handleChange, handleBlur, values, handleSubmit }) => (
+                <Form onSubmit={handleSubmit}>
+                  <div className="filterItem">
+                    <h4>Tìm kiếm theo tên</h4>
+                    <div className="inputItem">
+                      <Field
+                          type="text"
+                          name="searchByName"
+                          placeholder="Nhập tên sản phẩm"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.searchByName}
+                      />
+                      <button type="submit">Tìm kiếm</button>
+                    </div>
                   </div>
-                </div>
-              </Form>
-          )}
-        </Formik>
+                </Form>
+            )}
+          </Formik>
+        </div>
+        <div className="right">
+          <img
+              className="catImg"
+              src="/img/banner.jpg"
+              style={{ height: "25vw" }}
+              alt=""
+          />
+          <List catId={catId} subCats={selectedSubCats} />
+        </div>
       </div>
-      <div className="right">
-        <img
-          className="catImg"
-          src="/img/banner.jpg" style={{height:"25vw"}}
-          alt=""
-        />
-        <List catId={catId} maxPrice={maxPrice} sort={sort} subCats={selectedSubCats}/>
-      </div>
-
-    </div>
   );
 };
 

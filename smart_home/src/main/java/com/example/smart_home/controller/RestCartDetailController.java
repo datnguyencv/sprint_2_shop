@@ -9,8 +9,6 @@ import com.example.smart_home.model.order.PurchaseHistory;
 import com.example.smart_home.model.product.Product;
 import com.example.smart_home.serivce.*;
 import com.example.smart_home.serivce.impl.AccountDetails;
-import javafx.application.Preloader;
-import jdk.nashorn.internal.runtime.ErrorManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,14 +37,14 @@ public class RestCartDetailController {
     @Autowired
     private IPurchaseService purchaseService;
 
-        @PreAuthorize("hasAnyRole('ROLE_USER')")
-    @PostMapping ("addCart/{productId}/{quantity}")
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PostMapping("addCart/{productId}/{quantity}")
     public ResponseEntity<?> saveCartDetailByUserIdAndProductId(@PathVariable Integer productId,
-                                                                         @PathVariable int quantity) {
+                                                                @PathVariable int quantity) {
         Product product = productService.findById(productId);
-            Integer userId = ((AccountDetails) (SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getId();
+        Integer userId = ((AccountDetails) (SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getId();
         Account account = accountService.findAccountById(userId);
-            System.out.println(account);
+        System.out.println(account);
         List<ICartDetailDto> cartDetailDtoList = cartDetailService.findAllByAccountId(userId);
         for (ICartDetailDto cartDetailDto : cartDetailDtoList) {
             if (Objects.equals(cartDetailDto.getProductId(), productId)) {
@@ -54,13 +52,15 @@ public class RestCartDetailController {
                 int quantity1 = cartDetail.getQuantity() + quantity;
                 if (quantity1 > cartDetailDto.getInventoryLevel()) {
                     String errorMessage = "Quá số lượng sản phẩm trong kho. Vui lòng kiểm tra lại số lượng sản phẩm";
-                    return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);                } else {
+                    return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+                } else {
                     cartDetail.setQuantity(quantity1);
                     cartDetailService.save(cartDetail);
                     return new ResponseEntity<>(cartDetail, HttpStatus.OK);
                 }
             }
         }
+
         Cart cart = new Cart();
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -75,39 +75,35 @@ public class RestCartDetailController {
         CartDetail cartDetail1 = cartDetailService.save(cartDetail);
         return new ResponseEntity<>(cartDetail1, HttpStatus.CREATED);
     }
+
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @GetMapping("")
     public ResponseEntity<List<ICartDetailDtoCheck>> findAllCartByAccountId() {
         Integer userId = ((AccountDetails) (SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getId();
-//        Account account = accountService.findAccountById(userId);
         List<ICartDetailDtoCheck> cartDetailDtoList = cartDetailService.findvAllByAccountId(userId);
         return new ResponseEntity<>(cartDetailDtoList, HttpStatus.OK);
     }
+
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @DeleteMapping("cart-detail/{cartId}/{productId}")
     public ResponseEntity<?> deleteCartDetailByProductId(@PathVariable Integer cartId, @PathVariable Integer productId) {
-//        cartDetailService.deleteByProductId(cartId, productId);
         this.cartService.deleteByCartId(cartId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @PreAuthorize("hasAnyRole('ROLE_USER')")
-//    @DeleteMapping("deleteAll/cart-detail/{accountId}")
-//    public ResponseEntity<?> deleteAllCartDetailByAccountId(@PathVariable Integer accountId) {
-//        this.cartDetailService.deleteAllCartVDetail(accountId);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
     @PreAuthorize("hasAnyRole('ROLE_USER')")
-    @GetMapping("cart-detail/updateQuantity/{cartDetailId}/{quantity}")
-    public ResponseEntity<?> updateQuantityOfCartDetailByCartDetailId(@PathVariable Integer cartDetailId, @PathVariable int quantity) {
-        this.cartDetailService.updateQuantityOfCartDetail(quantity, cartDetailId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("cart-detail/unpay/")
+    public ResponseEntity<?> updateQuantityOfCartDetailByCartDetailId() {
+        Integer userId = ((AccountDetails) (SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getId();
+        List<ICartDetailDtoCheck> cartDetailDtoList = cartDetailService.findvAllByAccountIdUnPay(userId);
+        return new ResponseEntity<>(cartDetailDtoList, HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
-    @GetMapping("cart-detail/purchaseHistory/list/{accountId}")
-    public ResponseEntity<?> findAllPurchaseHistoryByAccountId(@PathVariable Integer accountId) {
-        List<PurchaseHistory> purchaseHistories = this.purchaseService.findAllByAccount_AccountId(accountId);
+    @GetMapping("cart-detail/purchaseHistory/list/")
+    public ResponseEntity<?> findAllPurchaseHistoryByAccountId() {
+        Integer userId = ((AccountDetails) (SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getId();
+        List<PurchaseHistory> purchaseHistories = this.purchaseService.findAllByAccount_AccountId(userId);
         return new ResponseEntity<>(purchaseHistories, HttpStatus.OK);
     }
 
@@ -117,10 +113,11 @@ public class RestCartDetailController {
         List<ICartDetailDtoCheck> purchaseHistoriesDetail = this.cartDetailService.findAllvCartDetailByPurchaseHistory(purchaseHistoryId);
         return new ResponseEntity<>(purchaseHistoriesDetail, HttpStatus.OK);
     }
+
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PostMapping("cart-detail/purchaseHistory/{total}")
     public ResponseEntity<?> addNewPurchaseHistory(
-            @PathVariable int total) {
+            @PathVariable double total) {
         Integer userId = ((AccountDetails) (SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getId();
         Account account = accountService.findAccountById(userId);
         List<Integer> cartDetailDto2s = this.cartDetailService.findAllvCartDetailByAccountIdAndIsDelete(userId);

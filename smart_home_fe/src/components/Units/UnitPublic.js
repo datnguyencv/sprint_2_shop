@@ -1,8 +1,8 @@
 import React from 'react';
 import { format } from 'date-fns';
 
-export function DateFormatter({ date }) {
-    const formattedDate = format(new Date(date), 'dd-MM-yyyy');
+export function DateFormatter({ dateString }) {
+    const formattedDate = format(new Date(dateString), 'dd-MM-yyyy   HH:mm:ss');
     return <span>{formattedDate}</span>;
 }
 export function CurrencyFormatter({ amount }) {

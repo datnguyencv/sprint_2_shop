@@ -20,7 +20,8 @@ public class CartDetail {
     @ManyToOne
     @JoinColumn(name = "purchase_history_id",referencedColumnName = "purchase_history_id")
     private PurchaseHistory purchaseHistory;
-    private Integer isDelete;
+    @Column(columnDefinition = "BIT DEFAULT 0", updatable = true)
+    private boolean isDelete;
 
     public CartDetail() {
     }
@@ -33,12 +34,12 @@ public class CartDetail {
         this.purchaseHistory = purchaseHistory;
     }
 
-    public Integer getIsDelete() {
+    public boolean isDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(Integer isDelete) {
-        this.isDelete = isDelete;
+    public void setDelete(boolean delete) {
+        isDelete = delete;
     }
 
     public Integer getCartDetailId() {

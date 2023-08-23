@@ -1,0 +1,27 @@
+.purchase-history-details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.purchase-history-details-table th,
+.purchase-history-details-table td {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.purchase-history-details-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.purchase-history-details-table img {
+    max-width: 80px;
+    max-height: 80px;
+}
+
+.purchase-history-details-table td[colspan="6"] {
+    text-align: center;
+    font-style: italic;
+}

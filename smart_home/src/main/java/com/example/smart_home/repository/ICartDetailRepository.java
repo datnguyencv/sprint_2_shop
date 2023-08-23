@@ -18,7 +18,7 @@ public interface ICartDetailRepository extends JpaRepository<CartDetail, Integer
             "            p.price as price, cd.quantity as quantity, p.product_id as productId, p.inventory_level as inventoryLevel\n" +
             "            FROM cart_detail cd join cart c on cd.cart_id = c.cart_id\n" +
             "            join product p on p.product_id = cd.product_id\n" +
-            "            where c.account_id = :id and cd.is_delete is null", nativeQuery = true)
+            "            where c.account_id = :id and cd.is_delete =0", nativeQuery = true)
     List<ICartDetailDto> findAllCartDetailByAccountId(@Param("id") Integer accountId);
 
     @Query(value = "SELECT c.cart_id as cartId, cd.cart_detail_id as cartDetailId, p.product_name as productName, p.description as `description`,\n" +
@@ -37,7 +37,7 @@ public interface ICartDetailRepository extends JpaRepository<CartDetail, Integer
             "FROM cart_detail cd\n" +
             "JOIN cart c ON cd.cart_id = c.cart_id\n" +
             "JOIN product p ON p.product_id = cd.product_id\n" +
-            "WHERE c.account_id = :id and cd.is_delete is null", nativeQuery = true)
+            "WHERE c.account_id = :id and cd.is_delete =0", nativeQuery = true)
     List<ICartDetailDtoCheck> findAllvCartDetailByAccountId(@Param("id") Integer accountId);
 
     @Query(value = "SELECT cd.cart_detail_id as cartDetailId  FROM cart_detail cd\n" +
@@ -61,4 +61,7 @@ public interface ICartDetailRepository extends JpaRepository<CartDetail, Integer
 
     @Query(value = "select * from cart_detail cd where cd.cart_detail_id = :id and cd.is_delete = 0", nativeQuery = true)
     CartDetail findCartDetailVByIdAndIsDelete(@Param("id") Integer id);
+
+    @Query(value = "select * from cart_detail cd where cd.cart_detail_id = :id and cd.is_delete = 0 and cd.purchase_history_id is null", nativeQuery = true)
+    List<ICartDetailDtoCheck> findAllvCartDetailByAccountIdUnPay(Integer accountId);
 }

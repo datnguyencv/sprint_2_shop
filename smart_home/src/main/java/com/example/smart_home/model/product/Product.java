@@ -21,6 +21,7 @@ public class Product {
     private int inventoryLevel;
     @ElementCollection
     private List<String> imageList = new ArrayList<>();
+    @Column(columnDefinition = "BIT DEFAULT 0", updatable = true)
     private Boolean flagDelete;
 
     @ManyToOne
