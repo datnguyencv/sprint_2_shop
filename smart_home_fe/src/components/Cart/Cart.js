@@ -74,7 +74,6 @@ const Cart = () => {
 
         return (
             <div className="cart" style={{display: open ? 'block' : 'none'}}>
-                {/*// Add a close button on top for mobile*/}
                 <button onClick={() => setOpen(false)} style={{
                     border: 'none',
                     color: 'red',
@@ -102,7 +101,7 @@ const Cart = () => {
                                 () => Alert.swalWithBootstrapButtons.fire({
                                     icon: "warning",
                                     title: "Xác nhận xóa",
-                                    html: `Bạn có muốn xoá sản phẩm <span style="color: red">${item.productName}</span> khỏi giỏ hàng không?`,
+                                    html: `Bạn có muốn xoá sản phẩm <span style="color: red">${item?.productName}</span> khỏi giỏ hàng không?`,
                                     showCancelButton: true,
                                     cancelButtonText: 'Không',
                                     confirmButtonText: 'Có',

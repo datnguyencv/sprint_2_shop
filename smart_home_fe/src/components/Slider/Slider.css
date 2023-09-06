@@ -1,30 +1,34 @@
 .slider {
-  height: calc(100vh - 80px);
-  width: 100vw;
+  height: 80vh; /* Chiều cao cố định của slider */
+  width: 100%;
   position: relative;
   overflow: hidden;
 }
+
 .slider .container {
-  width: 300vw;
+  width: 300vw; /* Số lượng ảnh * 100% */
   height: 100%;
   display: flex;
   transition: all 1s ease;
 }
+
 .slider .container img {
-  width: 100vw;
+  width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* Để ảnh nằm vừa trong khung */
 }
+
 .slider .icons {
   width: fit-content;
   display: flex;
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 100px;
+  bottom: 4rem;
   gap: 10px;
   margin: auto;
 }
+
 .slider .icons .icon {
   width: 50px;
   height: 50px;

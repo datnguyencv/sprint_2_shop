@@ -1,13 +1,22 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Card from "../Card/Card";
 import "./FeaturedProducts.css";
 import useFetch from "../../hooks/useFetch";
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 const FeaturedProducts = ({type}) => {
+    const [numSizeProducts, setNumSizeProducts] = useState(1);
+    const { data, loading, error } = useFetch(`product/list`);
 
-    const {data, loading, error} = useFetch(
-        `product/list`
-    );
+    useEffect(() => {
+        if (window.innerWidth > 768) {
+            setNumSizeProducts(4);
+        }
+        console.log(window.innerWidth);
+    }, []);
+
+    const limitedData = data?.slice(0, numSizeProducts);
 
     return (
         <div className="featuredProducts">
@@ -30,8 +39,9 @@ const FeaturedProducts = ({type}) => {
                     ? "Something went wrong!"
                     : loading
                         ? "loading"
-                        : data?.map((item) => <Card item={item} key={item.productId}/>)}
-            </div>
+                        :
+                            limitedData?.map((item) => <Card item={item} key={item.productId}/>)}
+                    </div>
         </div>
     );
 };

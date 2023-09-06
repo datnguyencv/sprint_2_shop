@@ -38,11 +38,39 @@ export const DetailProfile = () => {
         console.log(res.data)
     };
 
-
     if (!customer || !bill) {
         return null
     }
+if (sessionStorage.getItem('roles') === 'ROLE_ADMIN')
+    return (
+        <div className="container-fluid text-center mt-5">
+                <div className="avatar">
+                    <img src={customer.avatar ? customer.avatar : defaultAvatar} alt="avatar"
+                         className="rounded-circle"/>
+                </div>
+                <p className="username">{customer.username}</p>
+                <div className="details-info">
+                    <div className="details-item">
+                        <span className="label">Họ và tên:</span>
+                        <span className="value">{customer.name}</span>
+                    </div>
+                    <div className="details-item">
+                        <span className="label">Email:</span>
+                        <span className="value">{customer.email}</span>
+                    </div>
+                    <div className="details-item">
+                        <span className="label">Số điện thoại:</span>
+                        <span className="value">{customer.phoneNumber}</span>
+                    </div>
+                    <div className="details-item">
+                        <span className="label">Địa chỉ:</span>
+                        <span className="value">{customer.address}</span>
+                    </div>
+                </div>
+        </div>
+    )
 
+    if (sessionStorage.getItem('roles') === 'ROLE_USER')
     return (
         <section className="section">
             <div className="container">
@@ -114,7 +142,6 @@ export const DetailProfile = () => {
                     <div>
                         {/*{chi tiet don hang}*/}
                         <div className="col-lg-12 mt-3">
-                            {/* Render PurchaseHistoryDetailsTable here */}
                             {selectedPurchaseHistoryId !== null && (
                                 <div style={{textAlign:"center"}}>
                                 <h2>Chi tiết đơn hàng bill {selectedBillCode}</h2>

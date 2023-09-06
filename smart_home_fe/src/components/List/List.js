@@ -44,15 +44,21 @@ const List = () => {
     }
     return (
         <div className="list">
+            {(filteredData.length != 0) ? (
+                <>
             {filteredData.slice(0, itemsToShow).map((item) => (
                 <Card item={item} key={item.productId} />
             ))}
-
             {itemsToShow < filteredData.length && (
                 <button onClick={handleLoadMore} disabled={isLoading}>
                     {isLoading ? <LoadingSpinner/> : "Load More"}
                 </button>
             )}
+                </>
+                ) : (
+                <h2 style={{ textAlign: "center", color: "red" }}
+                >Không có sản phẩm được tìm thấy. Vui lòng thao tác lại.</h2>
+                )}
         </div>
     );
 };

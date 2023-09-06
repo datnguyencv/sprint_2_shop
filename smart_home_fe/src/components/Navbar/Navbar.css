@@ -218,7 +218,7 @@ goc
 /* CSS để định dạng các phần tử */
 .dropdown-content {
   position: absolute;
-  left: -5rem;
+  left: -10rem;
   min-width: 10rem;
   background-color: #fff; /* Màu nền */
   border: 1px solid #ddd; /* Viền */

@@ -25,8 +25,8 @@ const Card = ({ item }) => {
             className="secondImg"
           />
         </div>
-        <h2>{item?.productName}</h2>
-        <div className="prices">
+        <h2 className="m-auto">{item?.productName.substring(0,30)}</h2>
+        <div className="prices m-auto">
           <h3>VND {(item?.price)? <CurrencyFormatter amount={item.price} /> : <CurrencyFormatter amount={item?.price + 5000} />} đ</h3>
           <h3>VND <CurrencyFormatter amount={item?.price}/> đ</h3>
         </div>

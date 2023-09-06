@@ -5,8 +5,7 @@ function BeforeUnloadComponent() {
     useEffect( () => {
         const handleBeforeUnload = (e,productId,quantity) => {
             e.preventDefault();
-            e.returnValue = ''; // Nếu bạn muốn hiển thị thông báo trước khi đóng trình duyệt
-            // Gọi API để lưu dữ liệu vào cơ sở dữ liệu
+            e.returnValue = '';
             makeRequest.post(`cart/addCart/${productId}/${quantity}`)
         };
 

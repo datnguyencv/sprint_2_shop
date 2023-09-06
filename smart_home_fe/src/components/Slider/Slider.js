@@ -9,7 +9,8 @@ const Slider = () => {
   const data = [
     "https://www.finder.com.au/finder-au/wp-uploads/2021/08/Smart-home-gadgets_Supplied_1800x1000.jpg.jpg",
     "https://www.smartprix.com/bytes/wp-content/uploads/2023/02/1600x960_1277544-premium-smart-products.jpg",
-    "https://thumbs.dreamstime.com/b/smart-robot-cleans-modern-house-internet-things-home-gadgets-high-quality-illustration-271396167.jpg",
+    "https://mobieyes.vn/images/baiviet/13.1_nha_thong_minh_smarthome_1.jpg",
+      "https://media.vneconomy.vn/w800/images/upload/2022/11/04/1-4.jpg"
   ];
 
   const prevSlide = () => {
@@ -21,10 +22,11 @@ const Slider = () => {
 
   return (
     <div className="slider">
-      <div className="container" style={{transform:`translateX(-${currentSlide * 100}vw)`}}>
+      <div className="container" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
         <img src={data[0]} alt="" />
         <img src={data[1]} alt="" />
         <img src={data[2]} alt="" />
+        <img src={data[3]} alt="" />
       </div>
       <div className="icons">
         <div className="icon" onClick={prevSlide}>
