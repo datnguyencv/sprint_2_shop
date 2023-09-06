@@ -51,7 +51,7 @@ const List = () => {
             ))}
             {itemsToShow < filteredData.length && (
                 <button onClick={handleLoadMore} disabled={isLoading}>
-                    {isLoading ? <LoadingSpinner/> : "Load More"}
+                    {isLoading ? <LoadingSpinner/> : "Tải thêm"}
                 </button>
             )}
                 </>

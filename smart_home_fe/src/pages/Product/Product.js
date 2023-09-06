@@ -29,7 +29,6 @@ const Product = () => {
 
     const addCart = () => {
         if (token==="ROLE_USER") {
-            console.log(token)
             dispatch(
                 addToCart({
                     id: data?.productId,

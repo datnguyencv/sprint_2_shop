@@ -15,6 +15,7 @@ import {FetchCartApi} from "../Units/FetchCart";
 
 const Cart = () => {
         const products = useSelector((state) => state.cart.products);
+    console.log(products)
         const [open, setOpen] = useState(true);
         const [total, setTotal] = useState(0);
         const navigate = useNavigate();
@@ -31,7 +32,6 @@ const Cart = () => {
 
         const handleClick = (e, id) => {
             setOpen(false);
-            console.log('open')
         };
         const totalPrice = () => {
             let total = 0;
@@ -101,7 +101,7 @@ const Cart = () => {
                                 () => Alert.swalWithBootstrapButtons.fire({
                                     icon: "warning",
                                     title: "Xác nhận xóa",
-                                    html: `Bạn có muốn xoá sản phẩm <span style="color: red">${item?.productName}</span> khỏi giỏ hàng không?`,
+                                    html: `Bạn có muốn xoá sản phẩm <span style="color: red">${item.productName}</span> khỏi giỏ hàng không?`,
                                     showCancelButton: true,
                                     cancelButtonText: 'Không',
                                     confirmButtonText: 'Có',
